@@ -136,7 +136,7 @@ const viewEmployee = async (req, res) => {
   }
 };
 
-Api Delte
+// Api Delte
 const deleteEmployee = async (req, res) => {
   const { id } = req.params;
   const deleteQuery = `DELETE FROM employees WHERE id = ?`;
