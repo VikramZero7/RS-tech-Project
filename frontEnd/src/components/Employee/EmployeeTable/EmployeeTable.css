@@ -57,6 +57,7 @@
 
 .delete-container{
   display: flex;
+  flex-direction :column;
   justify-content: center;
   align-items: center;
   height: 200px;
@@ -67,6 +68,13 @@
   border-radius: 10px;
   
 }
+
+.delete-bdn{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}    
+    
 
 .icon-button{
   color: #a8a7a7;
