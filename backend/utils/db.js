@@ -13,4 +13,4 @@ const pool = mySql.createPool({
 
 console.log("MySQL pool created");
 
-module.exports = pool.promise()
+module.exports = pool.promise();
