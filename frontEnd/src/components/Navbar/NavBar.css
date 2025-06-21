@@ -1,0 +1,28 @@
+.nav-bar{
+    height: 12vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px solid #bfbfbf;
+    padding-right: 30px;
+}
+
+.nav-bar ul {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-bar ul li {
+    list-style-type: none;
+}
+
+.menu-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: rgb(228, 225, 225);
+}

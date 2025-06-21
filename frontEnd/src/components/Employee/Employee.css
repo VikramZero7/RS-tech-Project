@@ -1,0 +1,61 @@
+.employee-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.employee-serchAdd-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 50px;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #bfbfbf;
+    border-radius: 10px;
+}
+
+.input-container input {
+    height: 100%;
+    border: 0px;
+    outline: none;
+    flex-grow: 1;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.add-empolyee-container{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 50px;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #bfbfbf;
+    border-radius: 10px;
+    background-color: #0d6efd;
+    color: #ffffff;
+    transition: all 0.3s ease; 
+    
+}
+
+.add-empolyee-container:active{
+    transform: scale(0.95);
+}
+
+.add-empolyee-container button{
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    border: 0px solid;
+    outline: none;
+    cursor: pointer;
+    
+}
+

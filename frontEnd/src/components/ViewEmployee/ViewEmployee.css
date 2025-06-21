@@ -1,0 +1,31 @@
+.view-container{
+    padding: 10px;
+}
+
+.info-contain-view{
+    display: flex;
+    align-items: center;
+    gap: 10%;
+    border-bottom: 1px solid #bfbfbf;
+    padding-bottom: 15px;
+    padding-top:15px ;
+    padding-left: 10px;
+    
+}
+
+.info-contain-view h3 {
+    font-size: 16px;
+}
+
+.info-contain-view p {
+    font-size: 15px;
+    color: #919090;
+}
+
+.info-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    flex-grow: 1;
+}

@@ -1,0 +1,90 @@
+.employee-table-container{
+    padding: 5px;
+    border: 1px solid #bfbfbf;
+    border-radius: 10px;
+    margin-top: 30px;
+    min-height: 25vw;
+}
+
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin: 0px;
+  font-size: 14px;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #a8a7a7;
+  
+}
+
+.employee-table th,
+.employee-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  
+}
+
+
+.no-record-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    
+}
+
+.profile-con{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile{
+  height:30px;
+  width: 30px;
+  border: 0px;
+  border-radius: 50%;
+}
+
+.editable-container{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 400px;
+  background-color:  rgba(63, 62, 62, 0.3);
+  gap: 10px;
+  border: 0px;
+  border-radius: 10px;
+  
+}
+
+.icon-button{
+  color: #a8a7a7;
+}
+
+.trigger-button{
+   height: 40px;
+   width: 90px;
+   border: 0px;
+   border-radius: 10px;
+   color: #ffffff;
+   font-weight: bold;
+}
+
+.cancelbutton{
+  background-color: rgb(118, 236, 118);
+}
+
+.deleteButton {
+  background-color: rgb(236, 97, 97);
+}

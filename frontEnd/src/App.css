@@ -1,0 +1,30 @@
+.app-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
+    "sidebar navbar"
+    "sidebar main";
+  height: 100vh;
+}
+
+/* Layout Areas */
+.sidebar {
+  grid-area: sidebar;
+  background-color: #f7f9fa;
+  border-right: 1px solid #bfbfbf;
+
+}
+
+.navbar {
+  grid-area: navbar;
+  
+}
+
+.main-content {
+  grid-area: main;
+  padding: 1rem;
+  padding-top: 50px;
+  padding-left: 30px;
+  
+}
