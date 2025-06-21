@@ -1,13 +1,15 @@
 const db = require("../utils/db");
 
-const addEmployee = (req, res) => {
-  const { name, employeeId, department, designation, project, type, status } =
-    req.body;
+
+// Api add
+const addEmployee = async (req, res) => {
+  const { name, employeeId, department, designation, project, type, status } = req.body;
   const imageUrl = req.file?.path || null;
+
   const addQuery = `
-       INSERT INTO employees (name, employeeId, department, designation, project, type, status,profileImage)
-       Values (?,?,?,?,?,?,?,?);
-    `;
+    INSERT INTO employees (name, employeeId, department, designation, project, type, status, profileImage)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+  `;
 
   const values = [
     name,
@@ -19,129 +21,135 @@ const addEmployee = (req, res) => {
     status,
     imageUrl,
   ];
-  db.execute(addQuery, values, (err, result) => {
-    if (err) {
-      console.log(`DB Error ${err.message}`);
-      return res.status(500).json({ message: "Server Error" });
-    }
-    res.status(201).json({ message: "Employee Added", employeeId: result });
-  });
+
+  try {
+    const [result] = await db.execute(addQuery, values);
+    res.status(201).json({
+      message: "Employee Added",
+      insertedId: result.insertId,
+    });
+  } catch (err) {
+    console.log(`DB Error: ${err.message}`);
+    res.status(500).json({ message: "Server Error" });
+  }
 };
 
-const getAllEmployees = (req, res) => {
+//Api getAll
+
+const getAllEmployees = async (req, res) => {
   const { search_q } = req.query;
 
   let query = "SELECT * FROM employees";
   let params = [];
 
   if (search_q !== undefined && search_q.trim() !== "") {
-    query = "SELECT * FROM employees WHERE name = ?";
-    params = [search_q.trim()];
+    query = "SELECT * FROM employees WHERE name LIKE ?";
+    params = [`%${search_q.trim()}%`]; 
   }
 
-  db.query(query, params, (err, results) => {
-    if (err) {
-      console.error("DB error:", err);
-      return res.status(500).json({ error: "Database error" });
-    }
-    res.json(results);
-  });
+  try {
+    const [results] = await db.execute(query, params);
+    res.status(200).json(results); 
+  } catch (err) {
+    console.error("DB error:", err);
+    res.status(500).json({ error: "Database error" });
+  }
 };
 
-const updateEmployee = (req, res) => {
-  const { name, employeeId, department, designation, project, type, status } =
-    req.body;
+//Api Update
+
+const updateEmployee = async (req, res) => {
+  const { name, employeeId, department, designation, project, type, status } = req.body;
   const { id } = req.params;
   const imageUrl = req.file?.path;
 
-  // 1. First, get existing profileImage if no new one is uploaded
   const getQuery = `SELECT profileImage FROM employees WHERE id = ?`;
-  db.execute(getQuery, [id], (err, results) => {
-    if (err) return res.status(500).json({ message: err.message });
+
+  let existingImage;
+
+  try {
+    const [results] = await db.execute(getQuery, [id]);
 
     if (results.length === 0) {
       return res.status(404).json({ message: "Employee not found" });
     }
 
-    const existingImage = results[0].profileImage;
-    const finalImage = imageUrl || existingImage;
+    existingImage = results[0].profileImage;
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 
-    const updateQuery = `
-      UPDATE employees SET 
-        name = ?, 
-        employeeId = ?, 
-        department = ?, 
-        designation = ?, 
-        project = ?, 
-        type = ?, 
-        status = ?, 
-        profileImage = ?
-      WHERE id = ?
-    `;
+  const finalImage = imageUrl || existingImage;
 
-    const values = [
-      name,
-      employeeId,
-      department,
-      designation,
-      project,
-      type,
-      status,
-      finalImage,
-      id,
-    ];
+  const updateQuery = `
+    UPDATE employees SET 
+      name = ?, 
+      employeeId = ?, 
+      department = ?, 
+      designation = ?, 
+      project = ?, 
+      type = ?, 
+      status = ?, 
+      profileImage = ?
+    WHERE id = ?
+  `;
 
-    db.execute(updateQuery, values, (err, result) => {
-      if (err) {
-        return res.status(500).json({ message: err.message });
-      }
+  const values = [
+    name,
+    employeeId,
+    department,
+    designation,
+    project,
+    type,
+    status,
+    finalImage,
+    id,
+  ];
 
-      res.status(200).json({
-        message: "Employee Updated Successfully",
-        employeeId: id,
-      });
+  try {
+    const [rows] = await db.execute(updateQuery, values);
+    res.status(200).json({
+      message: "Employee Updated Successfully",
+      employeeId: id,
     });
-  });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const viewEmployee = (req, res) => {
+// API get1
+
+const viewEmployee = async (req, res) => {
   const { id } = req.params;
   const viewEmployeeQuery = `SELECT * FROM employees WHERE id = ?`;
 
-  db.execute(viewEmployeeQuery, [id], (err, results) => {
-    if (err) {
-      // send and exit immediately
-      return res.status(500).json({ message: err.message });
-    }
+  try {
+    const [results] = await db.execute(viewEmployeeQuery, [id]);
 
     if (results.length === 0) {
-      // no employee found — send 404 and exit
       return res.status(404).json({ message: "Employee not found" });
     }
 
-    // exactly one response, then exit
-    return res.status(200).json(results);
-  });
+    res.status(200).json(results); 
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const deleteEmployee = (req, res) => {
+Api Delte
+const deleteEmployee = async (req, res) => {
   const { id } = req.params;
-  const deleteQuery = `
-    DELETE FROM employees WHERE id = ?
-  `;
-  db.execute(deleteQuery, [id], (err, result) => {
-    if (err) {
-      return res
-        .status(500)
-        .json({ message: "Error deleting employee", error: err.message });
-    }
+  const deleteQuery = `DELETE FROM employees WHERE id = ?`;
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Employee not found" });
-    }
-
+  try {
+    const [result] = await db.execute(deleteQuery, [id])
     res.status(200).json({ message: "Employee deleted successfully" });
-  });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error deleting employee",
+      error: error.message,
+    });
+  }
 };
 
 module.exports = {
