@@ -131,7 +131,7 @@ const viewEmployee = async (req, res) => {
       return res.status(404).json({ message: "Employee not found" });
     }
 
-    res.status(200).json(results[0]); 
+    res.status(200).json(results); 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
