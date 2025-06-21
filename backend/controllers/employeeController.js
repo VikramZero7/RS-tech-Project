@@ -30,7 +30,7 @@ const addEmployee = async (req, res) => {
     });
   } catch (err) {
     console.log(`DB Error: ${err.message}`);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: err.message  });
   }
 };
 
@@ -76,7 +76,7 @@ const updateEmployee = async (req, res) => {
 
     existingImage = results[0].profileImage;
   } catch (error) {
-     res.status(500).json({ message: err.message });
+     res.status(500).json({ message: error.message });
     
   }
 
@@ -131,7 +131,7 @@ const viewEmployee = async (req, res) => {
       return res.status(404).json({ message: "Employee not found" });
     }
 
-    res.status(200).json(results); 
+    res.status(200).json(results[0]); 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
