@@ -76,7 +76,8 @@ const updateEmployee = async (req, res) => {
 
     existingImage = results[0].profileImage;
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+     res.status(500).json({ message: err.message });
+    
   }
 
   const finalImage = imageUrl || existingImage;
