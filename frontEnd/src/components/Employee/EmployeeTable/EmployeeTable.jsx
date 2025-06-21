@@ -89,7 +89,9 @@ const EmployeeTable = ({ search }) => {
                 >
                   {(close) => (
                     <div className="delete-container">
-                      <button
+                      <h3>Are You Sure ?</h3>
+                      <div className="delete-bdn">
+                        <button
                         type="button"
                         className="trigger-button cancelbutton"
                         onClick={() => close()}
@@ -103,6 +105,7 @@ const EmployeeTable = ({ search }) => {
                       >
                         Delete
                       </button>
+                      </div>
                     </div>
                   )}
                 </Popup>
