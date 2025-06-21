@@ -107,11 +107,20 @@ const updateEmployee = (req, res) => {
 const viewEmployee = (req, res) => {
   const { id } = req.params;
   const viewEmployeeQuery = `SELECT * FROM employees WHERE id = ?`;
-  db.execute(viewEmployeeQuery, [id], (err, result) => {
+
+  db.execute(viewEmployeeQuery, [id], (err, results) => {
     if (err) {
+      // send and exit immediately
       return res.status(500).json({ message: err.message });
     }
-    res.status(201).json(result);
+
+    if (results.length === 0) {
+      // no employee found — send 404 and exit
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    // exactly one response, then exit
+    return res.status(200).json(results[0]);
   });
 };
 
