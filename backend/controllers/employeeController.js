@@ -120,7 +120,7 @@ const viewEmployee = (req, res) => {
     }
 
     // exactly one response, then exit
-    return res.status(200).json(results[0]);
+    return res.status(200).json(results);
   });
 };
 
